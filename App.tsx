@@ -12,7 +12,6 @@ export default function App() {
     require('./assets/jaunelia.jpg'),
     require('./assets/g.jpg'),
     require('./assets/jaunelia.jpg'),
-    require('./assets/banner.jpg'),
     require('./assets/g.jpg'),
 
   ];
