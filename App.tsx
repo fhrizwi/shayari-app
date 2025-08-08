@@ -9,10 +9,12 @@ import './global.css';
 export default function App() {
   // Banner images for slider (4 instances of the same image)
   const bannerImages = [
+    require('./assets/jaunelia.jpg'),
+    require('./assets/g.jpg'),
+    require('./assets/jaunelia.jpg'),
     require('./assets/banner.jpg'),
-    require('./assets/banner.jpg'),
-    require('./assets/banner.jpg'),
-    require('./assets/banner.jpg'),
+    require('./assets/g.jpg'),
+
   ];
 
   // Render item function for FlatList
