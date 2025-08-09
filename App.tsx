@@ -11,8 +11,11 @@ export default function App() {
   const bannerImages = [
     require('./assets/jaunelia.jpg'),
     require('./assets/g.jpg'),
+    require('./assets/munawwar.jpg'),
     require('./assets/jaunelia.jpg'),
+    require('./assets/munawwar.jpg'),
     require('./assets/g.jpg'),
+    require('./assets/munawwar.jpg'),
 
   ];
 
