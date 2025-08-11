@@ -48,7 +48,7 @@ const AutoSlider: React.FC<AutoSliderProps> = ({
       />
       
       {/* Pagination Dots */}
-      <View className="absolute bottom-2 left-0 right-0 flex-row justify-center">
+      <View className="absolute -bottom-6 left-0 right-0 flex-row justify-center">
         {images.map((_, index) => (
           <View
             key={index}
