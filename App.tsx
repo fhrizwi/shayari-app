@@ -203,7 +203,8 @@ function HomeScreen({ navigation }) {
         <Appbar.Header style={styles.header}>
           <Appbar.Action icon="menu" color="white" onPress={() => navigation.openDrawer()} />
           <Appbar.Content title="Ishqnama" titleStyle={styles.title} />
-          <Appbar.Action icon="dots-vertical" color="white" onPress={() => { }} />
+          <Appbar.Action icon="heart" color="white" onPress={() => { }} />
+            {/* star-outline */}
         </Appbar.Header>
 
         <FlatList
