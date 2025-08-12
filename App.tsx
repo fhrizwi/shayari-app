@@ -91,11 +91,15 @@ function CustomDrawerContent(props) {
         label="Home"
         icon={({ color }) => <Icon name="home-outline" size={22} color={color} />}
         onPress={() => props.navigation.navigate('Home')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
       <DrawerItem
         label="Favourites"
         icon={({ color }) => <Icon name="star-outline" size={22} color={color} />}
         onPress={() => props.navigation.navigate('Favourites')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
 
       <Divider style={{ marginVertical: 8 }} />
@@ -105,11 +109,15 @@ function CustomDrawerContent(props) {
         label="Share App"
         icon={({ color }) => <Icon name="share-variant" size={22} color={color} />}
         onPress={() => props.navigation.navigate('Share App')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
       <DrawerItem
         label="Rate Us"
         icon={({ color }) => <Icon name="star-face" size={22} color={color} />}
         onPress={() => props.navigation.navigate('Rate Us')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
 
       <Divider style={{ marginVertical: 8 }} />
@@ -119,11 +127,15 @@ function CustomDrawerContent(props) {
         label="About App"
         icon={({ color }) => <Icon name="information-outline" size={22} color={color} />}
         onPress={() => props.navigation.navigate('About App')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
       <DrawerItem
         label="Privacy Policy"
         icon={({ color }) => <Icon name="shield-lock-outline" size={22} color={color} />}
         onPress={() => props.navigation.navigate('Privacy Policy')}
+        pressColor="#FEE2E2"               // Ripple color on press (Android)
+
       />
 
       {/* Social Icons Row at Bottom */}
@@ -131,7 +143,7 @@ function CustomDrawerContent(props) {
         <Icon
           name="instagram"
           size={26}
-          color="#E1306C"
+          color="#FEE2E2"
           onPress={() => openSocial('instagram', INSTAGRAM_USERNAME)}
         />
         <Icon
@@ -191,7 +203,7 @@ function HomeScreen({ navigation }) {
         <Appbar.Header style={styles.header}>
           <Appbar.Action icon="menu" color="white" onPress={() => navigation.openDrawer()} />
           <Appbar.Content title="Ishqnama" titleStyle={styles.title} />
-          <Appbar.Action icon="dots-vertical" color="white" onPress={() => {}} />
+          <Appbar.Action icon="dots-vertical" color="white" onPress={() => { }} />
         </Appbar.Header>
 
         <FlatList
@@ -243,7 +255,7 @@ export default function App() {
           drawerLabelStyle: { fontSize: 15 },
         }}
       >
-        <Drawer.Screen name="Home"  component={HomeScreen} />
+        <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Favourites" component={CategoryScreen} />
         <Drawer.Screen name="Write Your Shayari" component={CategoryScreen} />
         <Drawer.Screen name="New Shayari" component={CategoryScreen} />
@@ -267,7 +279,7 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: 'bold',
-    
+
   },
   drawerHeader: {
     alignItems: 'center',
