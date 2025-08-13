@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../screens/HomeScreen';
 import CategoryScreen from '../screens/CategoryScreen';
+import PoetCategoriesScreen from '../screens/PoetCategoriesScreen';
 import ShayariScreen from '../screens/ShayariScreen';
 import CustomDrawerContent from './CustomDrawerContent';
 
@@ -19,6 +20,11 @@ export default function AppNavigator() {
         }}
       >
         <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen 
+          name="PoetCategories" 
+          component={PoetCategoriesScreen} 
+          options={{ drawerItemStyle: { display: 'none' } }}
+        />
         <Drawer.Screen 
           name="Shayari" 
           component={ShayariScreen} 

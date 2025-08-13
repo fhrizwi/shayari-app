@@ -1,9 +1,12 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider, Appbar } from 'react-native-paper';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { cardData, CardItem } from '../CardData';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { poetData, Poet } from '../PoetData';
 import AutoSlider from '../AutoSlider';
+
+const { width } = Dimensions.get('window');
+const cardWidth = (width - 48) / 2; // 2 columns with margins
 
 interface HomeScreenProps {
   navigation: any;
@@ -20,21 +23,20 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     require('../../assets/munawwar.jpg'),
   ];
 
-  const renderCard = ({ item }: { item: CardItem }) => (
+  const renderPoetCard = (poet: Poet) => (
     <TouchableOpacity 
-      className="bg-red-300 h-36 w-[30%] rounded-xl mb-4 overflow-hidden border-rose-300 border-[1px] shadow-lg shadow-pink-800"
-      onPress={() => navigation.navigate('Shayari', { categoryName: item.title })}
+      key={poet.id}
+      style={[styles.poetCard, { width: cardWidth }]}
+      onPress={() => navigation.navigate('PoetCategories', { poet: poet })}
     >
-      <Image source={item.img} style={{ width: '100%', height: '75%' }} resizeMode="cover" />
-      <Text className="text-black text-center font-bold mt-2">{item.title}</Text>
+      <Image source={poet.image} style={styles.poetImage} resizeMode="cover" />
+      <View style={styles.poetInfo}>
+        <Text style={styles.poetName}>{poet.name}</Text>
+        <Text style={styles.poetDescription} numberOfLines={2}>
+          {poet.description}
+        </Text>
+      </View>
     </TouchableOpacity>
-  );
-
-  const ListHeader = () => (
-    <View className="p-2">
-      <AutoSlider images={bannerImages} autoPlayInterval={3000} />
-      <Text className="text-start text-lg text-rose-600 px-3 my-4">Shayari Categories</Text>
-    </View>
   );
 
   return (
@@ -46,17 +48,31 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           <Appbar.Action icon="heart" color="white" onPress={() => { }} />
         </Appbar.Header>
 
-        <FlatList
-          data={cardData}
-          renderItem={renderCard}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={ListHeader}
-          numColumns={3}
-          columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 12 }}
+        <ScrollView 
+          style={styles.container}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 80 }}
-          style={{ flex: 1 }}
-        />
+          contentContainerStyle={styles.scrollContent}
+        >
+          <View style={styles.bannerContainer}>
+            <AutoSlider images={bannerImages} autoPlayInterval={3000} />
+          </View>
+          
+          <Text style={styles.sectionTitle}>Famous Poets</Text>
+          
+          <View style={styles.poetsContainer}>
+            {poetData.map((poet, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <View key={`row-${index}`} style={styles.poetRow}>
+                    {renderPoetCard(poet)}
+                    {poetData[index + 1] && renderPoetCard(poetData[index + 1])}
+                  </View>
+                );
+              }
+              return null;
+            })}
+          </View>
+        </ScrollView>
       </PaperProvider>
     </SafeAreaProvider>
   );
@@ -69,5 +85,61 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  scrollContent: {
+    paddingBottom: 80,
+  },
+  bannerContainer: {
+    padding: 8,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#E37575',
+    marginHorizontal: 16,
+    marginVertical: 16,
+  },
+  poetsContainer: {
+    paddingHorizontal: 16,
+  },
+  poetRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  poetCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  poetImage: {
+    width: '100%',
+    height: 120,
+  },
+  poetInfo: {
+    padding: 12,
+  },
+  poetName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  poetDescription: {
+    fontSize: 12,
+    color: '#666',
+    lineHeight: 16,
   },
 });
