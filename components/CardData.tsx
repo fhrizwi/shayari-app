@@ -1,4 +1,3 @@
-import React from 'react';
 
 // Card data array
 export const cardData = [

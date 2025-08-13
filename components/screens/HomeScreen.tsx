@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider, Appbar } from 'react-native-paper';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { cardData, CardItem } from '../CardData';
 import AutoSlider from '../AutoSlider';
 
@@ -21,10 +21,13 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   ];
 
   const renderCard = ({ item }: { item: CardItem }) => (
-    <View className="bg-red-300 h-36 w-[30%] rounded-xl mb-4 overflow-hidden border-rose-300 border-[1px] shadow-lg shadow-pink-800">
+    <TouchableOpacity 
+      className="bg-red-300 h-36 w-[30%] rounded-xl mb-4 overflow-hidden border-rose-300 border-[1px] shadow-lg shadow-pink-800"
+      onPress={() => navigation.navigate('Shayari', { categoryName: item.title })}
+    >
       <Image source={item.img} style={{ width: '100%', height: '75%' }} resizeMode="cover" />
       <Text className="text-black text-center font-bold mt-2">{item.title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const ListHeader = () => (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, StyleSheet, Image, Alert, Platform, Linking } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -84,12 +83,6 @@ export default function CustomDrawerContent(props: CustomDrawerContentProps) {
         onPress={() => props.navigation.navigate('Home')}
         pressColor="#FEE2E2"
       />
-      <DrawerItem
-        label="Favourites"
-        icon={({ color }) => <Icon name="star-outline" size={22} color={color} />}
-        onPress={() => props.navigation.navigate('Favourites')}
-        pressColor="#FEE2E2"
-      />
 
       <Divider style={{ marginVertical: 8 }} />
 
@@ -128,7 +121,7 @@ export default function CustomDrawerContent(props: CustomDrawerContentProps) {
         <Icon
           name="instagram"
           size={26}
-          color="#FEE2E2"
+          color="#ee2a7b"
           onPress={() => openSocial('instagram', INSTAGRAM_USERNAME)}
         />
         <Icon

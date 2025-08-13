@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { View, Image, Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
