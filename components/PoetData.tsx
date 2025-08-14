@@ -11,140 +11,140 @@ export const poetData: Poet[] = [
   {
     id: '1',
     name: 'Rahat Indori',
-    image: require('../assets/cards/1.jpeg'),
+    image: require('../assets/cards/rahatindori.webp'),
     description: 'Famous for his revolutionary and romantic poetry',
     categories: ['Love', 'Revolution', 'Life', 'Society']
   },
   {
     id: '2',
     name: 'Mirza Ghalib',
-    image: require('../assets/cards/2.jpeg'),
+    image: require('../assets/cards/mirzagalib.webp'),
     description: 'The greatest Urdu poet of all time',
     categories: ['Love', 'Philosophy', 'Life', 'Pain']
   },
   {
     id: '3',
     name: 'Allama Iqbal',
-    image: require('../assets/cards/3.jpeg'),
+    image: require('../assets/cards/allamaiqbal.jpeg'),
     description: 'Poet-philosopher and spiritual leader',
     categories: ['Spirituality', 'Nation', 'Philosophy', 'Motivation']
   },
   {
     id: '4',
     name: 'Faiz Ahmed Faiz',
-    image: require('../assets/cards/4.jpeg'),
+    image: require('../assets/cards/faizahmedfaiz.jpg'),
     description: 'Revolutionary poet and social activist',
     categories: ['Revolution', 'Love', 'Freedom', 'Society']
   },
   {
     id: '5',
     name: 'Ahmad Faraz',
-    image: require('../assets/cards/5.jpeg'),
+    image: require('../assets/cards/ahmadfaraz.webp'),
     description: 'Master of romantic and revolutionary poetry',
     categories: ['Love', 'Romance', 'Pain', 'Life']
   },
   {
     id: '6',
     name: 'Mir Taqi Mir',
-    image: require('../assets/cards/6.jpeg'),
+    image: require('../assets/cards/mirtaqimir.jpg'),
     description: 'Pioneer of Urdu ghazal',
     categories: ['Love', 'Pain', 'Life', 'Philosophy']
   },
   {
     id: '7',
     name: 'Majrooh Sultanpuri',
-    image: require('../assets/cards/7.jpeg'),
+    image: require('../assets/cards/majroohsultanpuri.jpeg'),
     description: 'Renowned lyricist and poet',
     categories: ['Love', 'Romance', 'Life', 'Dreams']
   },
   {
     id: '8',
     name: 'Sahir Ludhianvi',
-    image: require('../assets/cards/8.jpeg'),
+    image: require('../assets/cards/sahirludhianvi.webp'),
     description: 'Progressive poet and lyricist',
     categories: ['Love', 'Society', 'Revolution', 'Life']
   },
   {
     id: '9',
     name: 'Parveen Shakir',
-    image: require('../assets/cards/9.jpeg'),
+    image: require('../assets/cards/parveenshakir.jpg'),
     description: 'Leading female Urdu poet',
     categories: ['Love', 'Feminism', 'Life', 'Emotions']
   },
   {
     id: '10',
     name: 'Jigar Moradabadi',
-    image: require('../assets/cards/10.jpeg'),
+    image: require('../assets/cards/jigarmoradabadi.jpg'),
     description: 'Master of classical Urdu poetry',
     categories: ['Love', 'Classical', 'Life', 'Beauty']
   },
   {
     id: '11',
     name: 'Josh Malihabadi',
-    image: require('../assets/cards/11.jpeg'),
+    image: require('../assets/cards/joshmalihabadi.jpg'),
     description: 'Fiery poet known for his passionate verses',
     categories: ['Passion', 'Revolution', 'Love', 'Nation']
   },
   {
     id: '12',
     name: 'Bashir Badr',
-    image: require('../assets/cards/12.jpeg'),
+    image: require('../assets/cards/bashirbadr.png'),
     description: 'Contemporary master of ghazal',
     categories: ['Love', 'Life', 'Philosophy', 'Modern']
   },
   {
     id: '13',
     name: 'Harivansh Rai Bachchan',
-    image: require('../assets/cards/13.jpeg'),
+    image: require('../assets/cards/harivanshraibachchan.jpeg'),
     description: 'Legendary Hindi poet',
     categories: ['Life', 'Philosophy', 'Motivation', 'Hope']
   },
   {
     id: '14',
     name: 'Ramdhari Singh Dinkar',
-    image: require('../assets/cards/14.jpeg'),
+    image: require('../assets/cards/ramdharisinghdinkar.jpg'),
     description: 'National poet of India',
     categories: ['Nation', 'Courage', 'Revolution', 'Motivation']
   },
   {
     id: '15',
     name: 'Kumar Vishwas',
-    image: require('../assets/cards/15.jpeg'),
+    image: require('../assets/cards/kumarvishwas.jpg'),
     description: 'Contemporary Hindi poet and politician',
     categories: ['Love', 'Modern', 'Life', 'Romance']
   },
   {
     id: '16',
     name: 'Rumi',
-    image: require('../assets/cards/16.jpeg'),
+    image: require('../assets/cards/rumi.jpg'),
     description: 'Sufi mystic and poet',
     categories: ['Spirituality', 'Love', 'Philosophy', 'Mysticism']
   },
   {
     id: '17',
     name: 'Hafiz',
-    image: require('../assets/cards/17.jpeg'),
+    image: require('../assets/cards/hafiz.jpeg'),
     description: 'Persian lyric poet',
     categories: ['Love', 'Spirituality', 'Wine', 'Philosophy']
   },
   {
     id: '18',
     name: 'Omar Khayyam',
-    image: require('../assets/cards/18.jpeg'),
+    image: require('../assets/cards/omarkhayyam.webp'),
     description: 'Persian mathematician and poet',
     categories: ['Philosophy', 'Life', 'Wine', 'Time']
   },
   {
     id: '19',
     name: 'Bulleh Shah',
-    image: require('../assets/cards/19.jpeg'),
+    image: require('../assets/cards/bullehshah.jpg'),
     description: 'Punjabi Sufi poet',
     categories: ['Spirituality', 'Sufi', 'Philosophy', 'Divine']
   },
   {
     id: '20',
     name: 'Pablo Neruda',
-    image: require('../assets/cards/20.jpeg'),
+    image: require('../assets/cards/pabloneruda.jpg'),
     description: 'Chilean poet and Nobel laureate',
     categories: ['Love', 'Nature', 'Politics', 'Romance']
   }

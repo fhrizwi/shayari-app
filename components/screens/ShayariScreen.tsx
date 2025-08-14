@@ -16,28 +16,15 @@ type ShayariScreenProps = {
   route: RouteProp<RootStackParamList, 'Shayari'>;
 };
 
-type Language = 'hindi' | 'english' | 'urdu';
 export default function ShayariScreen({ navigation, route }: ShayariScreenProps) {
   const { poetName, categoryName } = route.params;
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('hindi');
   const [likedShayaris, setLikedShayaris] = useState<Set<number>>(new Set());
   
   const shayaris = poetShayariData[poetName]?.[categoryName] || [
     'जल्द ही इस श्रेणी में शायरी जोड़ी जाएगी।\nकृपया बाद में फिर से देखें।'
   ];
 
-  const languageLabels = {
-    hindi: 'हिंदी',
-    english: 'English', 
-    urdu: 'اردو'
-  };
 
-  const toggleLanguage = () => {
-    const languages: Language[] = ['hindi', 'english', 'urdu'];
-    const currentIndex = languages.indexOf(currentLanguage);
-    const nextIndex = (currentIndex + 1) % languages.length;
-    setCurrentLanguage(languages[nextIndex]);
-  };
   const shareShayari = async (shayari: string) => {
     try {
       await Share.share({
@@ -81,12 +68,6 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
         </Appbar.Header>
 
         {/* Language Toggle Button */}
-        <View style={styles.languageContainer}>
-          <TouchableOpacity style={styles.languageButton} onPress={toggleLanguage}>
-            <Icon name="translate" size={18} color="white" />
-            <Text style={styles.languageText}>{languageLabels[currentLanguage]}</Text>
-          </TouchableOpacity>
-        </View>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
           {shayaris.map((shayari, index) => (
             <View key={index} style={styles.shayariCard}>
