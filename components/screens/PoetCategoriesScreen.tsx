@@ -114,9 +114,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   poetImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     marginRight: 16,
   },
   poetInfo: {

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider, Appbar } from 'react-native-paper';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Share, Alert, Clipboard } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Share, Alert } from 'react-native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import { poetShayariData } from '../PoetData';
+import { FavoritesStorage } from '../storage/FavoritesStorage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Clipboard from 'expo-clipboard'; // ✅ Expo clipboard
 
 type RootStackParamList = {
   Shayari: { poetName: string; categoryName: string };
@@ -18,12 +20,26 @@ type ShayariScreenProps = {
 
 export default function ShayariScreen({ navigation, route }: ShayariScreenProps) {
   const { poetName, categoryName } = route.params;
-  const [likedShayaris, setLikedShayaris] = useState<Set<number>>(new Set());
-  
+  const [likedShayaris, setLikedShayaris] = useState<Set<string>>(new Set());
+
   const shayaris = poetShayariData[poetName]?.[categoryName] || [
     'जल्द ही इस श्रेणी में शायरी जोड़ी जाएगी।\nकृपया बाद में फिर से देखें।'
   ];
 
+  useEffect(() => {
+    loadFavoriteStatus();
+  }, []);
+
+  const loadFavoriteStatus = async () => {
+    const favoriteSet = new Set<string>();
+    for (const shayari of shayaris) {
+      const isFav = await FavoritesStorage.isFavorite(shayari, poetName);
+      if (isFav) {
+        favoriteSet.add(shayari);
+      }
+    }
+    setLikedShayaris(favoriteSet);
+  };
 
   const shareShayari = async (shayari: string) => {
     try {
@@ -37,7 +53,7 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
 
   const copyToClipboard = async (shayari: string) => {
     try {
-      await Clipboard.setString(shayari);
+      await Clipboard.setStringAsync(shayari); // ✅ Async method for Expo
       Alert.alert('Copied!', 'Shayari copied to clipboard', [{ text: 'OK' }]);
     } catch (error) {
       console.log('Error copying to clipboard:', error);
@@ -45,14 +61,26 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
     }
   };
 
-  const toggleLike = (index: number) => {
-    const newLikedShayaris = new Set(likedShayaris);
-    if (newLikedShayaris.has(index)) {
-      newLikedShayaris.delete(index);
+  const toggleLike = async (shayari: string) => {
+    const isCurrentlyLiked = likedShayaris.has(shayari);
+
+    if (isCurrentlyLiked) {
+      await FavoritesStorage.removeFavorite(shayari, poetName);
+      const newLikedShayaris = new Set(likedShayaris);
+      newLikedShayaris.delete(shayari);
+      setLikedShayaris(newLikedShayaris);
+      Alert.alert('Removed', 'Shayari removed from favorites');
     } else {
-      newLikedShayaris.add(index);
+      await FavoritesStorage.addFavorite({
+        text: shayari,
+        poetName: poetName,
+        categoryName: categoryName,
+      });
+      const newLikedShayaris = new Set(likedShayaris);
+      newLikedShayaris.add(shayari);
+      setLikedShayaris(newLikedShayaris);
+      Alert.alert('Added', 'Shayari added to favorites');
     }
-    setLikedShayaris(newLikedShayaris);
   };
 
   return (
@@ -67,13 +95,12 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
           <Appbar.Action icon="heart" color="white" onPress={() => {}} />
         </Appbar.Header>
 
-        {/* Language Toggle Button */}
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
           {shayaris.map((shayari, index) => (
             <View key={index} style={styles.shayariCard}>
               <Text style={styles.shayariText}>{shayari}</Text>
               <Text style={styles.poetCredit}>- {poetName}</Text>
-              
+
               <View style={styles.actionButtons}>
                 <TouchableOpacity 
                   style={styles.actionButton}
@@ -82,7 +109,7 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
                   <Icon name="content-copy" size={20} color="#E37575" />
                   <Text style={styles.actionText}>Copy</Text>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity 
                   style={styles.actionButton}
                   onPress={() => shareShayari(shayari)}
@@ -90,15 +117,15 @@ export default function ShayariScreen({ navigation, route }: ShayariScreenProps)
                   <Icon name="share-variant" size={20} color="#E37575" />
                   <Text style={styles.actionText}>Share</Text>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity 
                   style={styles.actionButton}
-                  onPress={() => toggleLike(index)}
+                  onPress={() => toggleLike(shayari)}
                 >
                   <Icon 
-                    name={likedShayaris.has(index) ? "heart" : "heart-outline"} 
+                    name={likedShayaris.has(shayari) ? "heart" : "heart-outline"} 
                     size={20} 
-                    color={likedShayaris.has(index) ? "#ff4757" : "#E37575"} 
+                    color={likedShayaris.has(shayari) ? "#ff4757" : "#E37575"} 
                   />
                   <Text style={styles.actionText}>Like</Text>
                 </TouchableOpacity>
@@ -119,28 +146,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  languageContainer: {
-    backgroundColor: '#E37575',
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    alignItems: 'flex-end',
-  },
-  languageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-  },
-  languageText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-    marginLeft: 6,
-  },
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',
@@ -151,10 +156,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,

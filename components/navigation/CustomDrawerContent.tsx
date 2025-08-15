@@ -88,9 +88,9 @@ export default function CustomDrawerContent(props: CustomDrawerContentProps) {
 
       {/* Middle Section - Engagement */}
       <DrawerItem
-        label="Share App"
-        icon={({ color }) => <Icon name="share-variant" size={22} color={color} />}
-        onPress={() => props.navigation.navigate('Share App')}
+        label="My Favorites"
+        icon={({ color }) => <Icon name="heart" size={22} color={color} />}
+        onPress={() => props.navigation.navigate('My Favorites')}
         pressColor="#FEE2E2"
       />
       <DrawerItem

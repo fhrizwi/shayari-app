@@ -1,9 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../screens/HomeScreen';
-import CategoryScreen from '../screens/CategoryScreen';
 import PoetCategoriesScreen from '../screens/PoetCategoriesScreen';
 import ShayariScreen from '../screens/ShayariScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import RateUsScreen from '../screens/RateUsScreen';
+import AboutAppScreen from '../screens/AboutAppScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import CustomDrawerContent from './CustomDrawerContent';
 
 const Drawer = createDrawerNavigator();
@@ -20,6 +23,7 @@ export default function AppNavigator() {
         }}
       >
         <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="My Favorites" component={FavoritesScreen} />
         <Drawer.Screen 
           name="PoetCategories" 
           component={PoetCategoriesScreen} 
@@ -30,10 +34,9 @@ export default function AppNavigator() {
           component={ShayariScreen} 
           options={{ drawerItemStyle: { display: 'none' } }}
         />
-        <Drawer.Screen name="Share App" component={CategoryScreen} />
-        <Drawer.Screen name="Rate Us" component={CategoryScreen} />
-        <Drawer.Screen name="About App" component={CategoryScreen} />
-        <Drawer.Screen name="Privacy Policy" component={CategoryScreen} />
+        <Drawer.Screen name="Rate Us" component={RateUsScreen} />
+        <Drawer.Screen name="About App" component={AboutAppScreen} />
+        <Drawer.Screen name="Privacy Policy" component={PrivacyPolicyScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

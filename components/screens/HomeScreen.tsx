@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider, Appbar } from 'react-native-paper';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { poetData, Poet } from '../PoetData';
 import AutoSlider from '../AutoSlider';
 
@@ -22,6 +22,16 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     require('../../assets/g.jpg'),
     require('../../assets/munawwar.jpg'),
   ];
+
+  const renderHorizontalPoetCard = ({ item }: { item: Poet }) => (
+    <TouchableOpacity 
+      style={styles.horizontalPoetCard}
+      onPress={() => navigation.navigate('PoetCategories', { poet: item })}
+    >
+      <Image source={item.image} style={styles.horizontalPoetImage} resizeMode="cover" />
+      <Text style={styles.horizontalPoetName} numberOfLines={2}>{item.name}</Text>
+    </TouchableOpacity>
+  );
 
   const renderPoetCard = (poet: Poet) => (
     <TouchableOpacity 
@@ -55,6 +65,19 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         >
           <View style={styles.bannerContainer}>
             <AutoSlider images={bannerImages} autoPlayInterval={3000} />
+          </View>
+          
+          {/* Horizontal Poets Scroll */}
+          <View style={styles.horizontalSection}>
+            <Text style={styles.sectionTitle}>Quick Access Poets</Text>
+            <FlatList
+              data={poetData}
+              renderItem={renderHorizontalPoetCard}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalScrollContainer}
+            />
           </View>
           
           <Text style={styles.sectionTitle}>Famous Poets</Text>
@@ -96,6 +119,41 @@ const styles = StyleSheet.create({
   bannerContainer: {
     padding: 8,
   },
+  horizontalSection: {
+    marginBottom: 20,
+  },
+  horizontalScrollContainer: {
+    paddingHorizontal: 16,
+  },
+  horizontalPoetCard: {
+    width: 100,
+    marginRight: 12,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  horizontalPoetImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginBottom: 8,
+  },
+  horizontalPoetName: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#333',
+    textAlign: 'center',
+    lineHeight: 14,
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -126,7 +184,7 @@ const styles = StyleSheet.create({
   },
   poetImage: {
     width: '100%',
-    height: 120,
+    height: 140,
   },
   poetInfo: {
     padding: 12,
