@@ -1,9 +1,14 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider, Appbar } from 'react-native-paper';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { poetData, Poet } from '../PoetData';
 import AutoSlider from '../AutoSlider';
+import { FavoritesStorage } from '../storage/FavoritesStorage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - 48) / 2; // 2 columns with margins
@@ -13,6 +18,24 @@ interface HomeScreenProps {
 }
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const [favoritesCount, setFavoritesCount] = useState(0);
+
+  // Load favorites count when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      loadFavoritesCount();
+    }, [])
+  );
+
+  const loadFavoritesCount = async () => {
+    try {
+      const favorites = await FavoritesStorage.getFavorites();
+      setFavoritesCount(favorites.length);
+    } catch (error) {
+      console.error('Error loading favorites count:', error);
+    }
+  };
+
   const bannerImages = [
     require('../../assets/jaunelia.jpg'),
     require('../../assets/g.jpg'),
@@ -55,7 +78,23 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Appbar.Header style={styles.header}>
           <Appbar.Action icon="menu" color="white" onPress={() => navigation.openDrawer()} />
           <Appbar.Content title="Ishqnama" titleStyle={styles.title} />
-          <Appbar.Action icon="heart" color="white" onPress={() => { }} />
+          <TouchableOpacity 
+            style={styles.heartButton}
+            onPress={() => navigation.navigate('My Favorites')}
+          >
+            <Icon 
+              name={favoritesCount > 0 ? "heart" : "heart-outline"} 
+              size={24} 
+              color="white" 
+            />
+            {favoritesCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>
+                  {favoritesCount > 99 ? '99+' : favoritesCount.toString()}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </Appbar.Header>
 
         <ScrollView 
@@ -200,5 +239,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     lineHeight: 16,
+  },
+  heartButton: {
+    marginRight: 16,
+    position: 'relative',
+    padding: 8,
+  },
+  badge: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: '#ff4757',
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
